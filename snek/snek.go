@@ -8,6 +8,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	InitCopyright func(*cobra.Command) error
+	InitEula func(*cobra.Command) error
+	InitLicense func(*cobra.Command) error
+	InitRoot func(*cobra.Command) error
+	InitVersion func(*cobra.Command) error
+)
+
 func Bind(configName string, flag *pflag.Flag, onFail ...onfail.OnFail) error {
 	if err := viper.BindPFlag(configName, flag); err != nil {
 		return onfail.Fail(err, flag, onfail.Print, onFail)
@@ -16,15 +24,102 @@ func Bind(configName string, flag *pflag.Flag, onFail ...onfail.OnFail) error {
 	return nil
 }
 
-var Init func(*cobra.Command) error
-
-func Main(rootCmd *cobra.Command, onFail ...onfail.OnFail) error {
-	if rootCmd == nil {
-		rootCmd = &cobra.Command{}
+func Main(onFail ...onfail.OnFail) error {
+	copyrightCmd = &cobra.Command{
+		Use: "copyright",
+		Short: "Print the copyright",
+		Long: `Print the copyright`,
+		Run: func(cmd *cobra.Command, args []string) {
+			copyright := NewCopyright(CopyrightFirstYear, CopyrightHolder)
+			opath := pflag.GetString("out")
+			out := os.Stdout
+			if opath != "-" {
+				var err error
+				if out, err = os.Create(opath); err != nil {
+					onfail.Fail(err, opath, onfail.Fatal, onFail)
+				}
+				defer out.Close()
+			}
+			switch {
+			case pflag.GetBool("json"):
+				fmt.Fprintln(copyright.Json())
+			case pflag.GetBool("xml"):
+				fmt.Fprintln(copyright.Xml())
+			default:
+				fmt.Fprintln(copyright.Robots)
+			}
+		}
 	}
-	if Init != nil {
-		if err := Init(rootCmd); err != nil {
+	eulaCmd = &cobra.Command{
+		Use: "eula",
+		Short: "Print the End User License Agreement (EULA)",
+		Long: `Print the End User License Agreement (EULA)`,
+		Run: func(cmd *cobra.Command, args []string) {
+			eula := NewLegalText("eula", Eula)
+			opath := pflag.GetString("out")
+			out := os.Stdout
+			if opath != "-" {
+				var err error
+				if out, err = os.Create(opath); err != nil {
+					onfail.Fail(err, opath, onfail.Fatal, onFail)
+				}
+				defer out.Close()
+			}
+			switch {
+			case pflag.GetBool("json"):
+				fmt.Fprintln(eula.Json())
+			case pflag.GetBool("xml"):
+				fmt.Fprintln(eula.Xml())
+			default:
+				fmt.Fprintln(eula.Robots)
+			}
+		}
+	}
+	licenseCmd = &cobra.Command{
+		Use: "license",
+		Short: "Print the End User License Agreement (EULA)",
+		Long: `Print the End User License Agreement (EULA)`,
+		Run: func(cmd *cobra.Command, args []string) {
+			license := NewLegalText("license", Eula)
+			opath := pflag.GetString("out")
+			out := os.Stdout
+			if opath != "-" {
+				var err error
+				if out, err = os.Create(opath); err != nil {
+					onfail.Fail(err, opath, onfail.Fatal, onFail)
+				}
+				defer out.Close()
+			}
+			switch {
+			case pflag.GetBool("json"):
+				fmt.Fprintln(license.Json())
+			case pflag.GetBool("xml"):
+				fmt.Fprintln(license.Xml())
+			default:
+				fmt.Fprintln(license.Robots)
+			}
+		}
+	}
+	rootCmd = &cobra.Command{Use: os.Args[0]}
+	rootCmd.PersistentFlags().StringP("out", "o", "-", "Output to this file (or \"-\" for stdout)")
+	rootCmd.PersistentFlags().Bool("json", false, "Output in json")
+	rootCmd.PersistentFlags().Bool("xml", false, "Output in xml")
+	versionCmd = &cobra.Command{
+		Use: "version",
+		Short: "Print the version",
+		Long: `Print the version`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(Version)
+		}
+	}
+	if InitRoot != nil {
+		if err := InitRoot(rootCmd); err != nil {
 			return onfail.Fail(err, rootCmd, onfail.Print, onFail)
+		}
+	}
+	if InitVersion != nil {
+		if err := InitVersion(versiontCmd); err != nil {
+			return onfail.Fail(err, versiontCmd, onfail.Print, onFail)
 		}
 	}
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
