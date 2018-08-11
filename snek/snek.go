@@ -162,4 +162,3 @@ type viperPFlagBinding struct {
 var viperPFlagBindings []viperPFlagBinding
 
 // Derivative of [snippet](https://github.com/spf13/viper/issues/82#issuecomment-403165788) by [WGH-](https://github.com/WGH-)
-// Currently awaiting permission to use in this repo
