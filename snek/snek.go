@@ -56,7 +56,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
-			eula := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), Eula)
+			eula := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
 			opath := pflag.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
@@ -81,7 +81,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
-			legal := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), Eula)
+			legal := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
 			opath := pflag.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
@@ -106,7 +106,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
-			license := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), Eula)
+			license := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
 			opath := pflag.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
