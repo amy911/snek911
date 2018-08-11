@@ -15,42 +15,42 @@ var (
 	CopyrightHolder string
 )
 
-type Copr struct {
-	Holder string `json:"copr_holder"`
-	Pretty string `json:"copr_pretty"`
-	Robots string `json:"copr_robots"`
-	From   int    `json:"copr_from"`
-	To     int    `json:"copr_to"`
+type Copyright struct {
+	Holder string `json:"holder" xml:"holder,attr"`
+	Pretty string `json:"pretty" xml:"pretty,attr"`
+	Robots string `json:"robots" xml:"robots,attr"`
+	From   int    `json:"from" xml:"from,attr"`
+	To     int    `json:"to" xml:"to,attr"`
 }
 
-func NewCopr(firstYear int, holder string) *Copr {
-	return new(Copr).Init(firstYear, holder)
+func NewCopyright(firstYear int, holder string) *Copyright {
+	return new(Copyright).Init(firstYear, holder)
 }
 
-func (copr *Copr) Init(firstYear int, holder string) *Copr {
+func (copyright *Copyright) Init(firstYear int, holder string) *Copyright {
 	thisYear := time.Now().Year()
 	years := strconv.Itoa(firstYear) + "-" + strconv.Itoa(thisYear)
-	copr.Holder = holder
-	copr.Pretty = "Copyright \u00a9 " + years + " " + holder
-	copr.Robots = "Copyright (c) " + years + "\t" + holder
-	copr.From = firstYear
-	copr.To = thisYear
-	return new(Copr).Init(firstYear, holder)
+	copyright.Holder = holder
+	copyright.Pretty = "Copyright \u00a9 " + years + " " + holder
+	copyright.Robots = "Copyright (c) " + years + "\t" + holder
+	copyright.From = firstYear
+	copyright.To = thisYear
+	return new(Copyright).Init(firstYear, holder)
 }
 
-func (copr *Copr) Json(onFail ...onfail.OnFail) string {
-	out, err := json.Marshal(copr)
+func (copyright *Copyright) Json(onFail ...onfail.OnFail) string {
+	out, err := json.Marshal(copyright)
 	if err != nil {
-		onfail.Fail(err, copr, onfail.Print, onFail)
+		onfail.Fail(err, copyright, onfail.Print, onFail)
 		return ""
 	}
 	return string(out)
 }
 
-func (copr *Copr) Xml(onFail ...onfail.OnFail) string {
-	out, err := xml.Marshal(copr)
+func (copyright *Copyright) Xml(onFail ...onfail.OnFail) string {
+	out, err := xml.Marshal(copyright)
 	if err != nil {
-		onfail.Fail(err, copr, onfail.Print, onFail)
+		onfail.Fail(err, copyright, onfail.Print, onFail)
 		return ""
 	}
 	return string(out)
