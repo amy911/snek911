@@ -17,14 +17,6 @@ var (
 	InitVersion func(*cobra.Command) error
 )
 
-func Bind(configName string, flag *pflag.Flag, onFail ...onfail.OnFail) error {
-	if err := viper.BindPFlag(configName, flag); err != nil {
-		return onfail.Fail(err, flag, onfail.Print, onFail)
-	}
-	viperPFlagBindings = append(viperPFlagBindings, viperPFlagBinding(configName, flag.Value))
-	return nil
-}
-
 func Main(onFail ...onfail.OnFail) error {
 	copyrightCmd = &cobra.Command{
 		Use: "copyright",
