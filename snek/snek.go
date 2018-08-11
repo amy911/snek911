@@ -11,6 +11,7 @@ import (
 var (
 	InitCopyright func(*cobra.Command) error
 	InitEula func(*cobra.Command) error
+	InitLegal func(*cobra.Command) error
 	InitLicense func(*cobra.Command) error
 	InitRoot func(*cobra.Command) error
 	InitVersion func(*cobra.Command) error
@@ -72,6 +73,31 @@ func Main(onFail ...onfail.OnFail) error {
 				fmt.Fprintln(eula.Xml())
 			default:
 				fmt.Fprintln(eula.Robots)
+			}
+		}
+	}
+	legalCmd = &cobra.Command{
+		Use: "legal",
+		Short: "Print the End User License Agreement (EULA)",
+		Long: `Print the End User License Agreement (EULA)`,
+		Run: func(cmd *cobra.Command, args []string) {
+			legal := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), Eula)
+			opath := pflag.GetString("out")
+			out := os.Stdout
+			if opath != "-" {
+				var err error
+				if out, err = os.Create(opath); err != nil {
+					onfail.Fail(err, opath, onfail.Fatal, onFail)
+				}
+				defer out.Close()
+			}
+			switch {
+			case pflag.GetBool("json"):
+				fmt.Fprintln(legal.Json())
+			case pflag.GetBool("xml"):
+				fmt.Fprintln(legal.Xml())
+			default:
+				fmt.Fprintln(legal.Robots)
 			}
 		}
 	}
