@@ -31,3 +31,6 @@ func BindOne(configName string, flag *pflag.Flag, onFail ...interface{}) error {
 	viperPFlagBindings = append(viperPFlagBindings, viperPFlagBinding(configName, flag.Value))
 	return nil
 }
+
+// Derivative of [snippet](https://github.com/spf13/viper/issues/82#issuecomment-403165788) by [WGH-](https://github.com/WGH-)
+// Currently awaiting permission to use in this repo
