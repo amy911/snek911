@@ -16,14 +16,16 @@ func Bind(configName string, flag *pflag.Flag, onFail ...onfail.OnFail) error {
 	return nil
 }
 
-var Init func(*cobra.Command)
+var Init func(*cobra.Command) error
 
-func Main(rootCmd *cobra.Command, onFail ...onfail.OnFail) {
+func Main(rootCmd *cobra.Command, onFail ...onfail.OnFail) error {
 	if rootCmd == nil {
 		rootCmd = &cobra.Command{}
 	}
 	if Init != nil {
-		Init(rootCmd)
+		if err := Init(rootCmd); err != nil {
+			return onfail.Fail(err, rootCmd, onfail.Print, onFail)
+		}
 	}
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 		if err := viper.ReadInConfig(); err != nil {
