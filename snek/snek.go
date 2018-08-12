@@ -27,7 +27,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Long: `Print the copyright`,
 		Run: func(cmd *cobra.Command, args []string) {
 			copyright := NewCopyright(CopyrightFirstYear, CopyrightHolder)
-			opath := pflag.GetString("out")
+			opath := cmd.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
 				var err error
@@ -37,9 +37,9 @@ func Main(onFail ...onfail.OnFail) error {
 				defer out.Close()
 			}
 			switch {
-			case pflag.GetBool("json"):
+			case cmd.GetBool("json"):
 				fmt.Fprintln(out, copyright.Json())
-			case pflag.GetBool("xml"):
+			case cmd.GetBool("xml"):
 				fmt.Fprintln(out, copyright.Xml())
 			default:
 				fmt.Fprintln(out, copyright.Robots)
@@ -57,7 +57,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
 			eula := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
-			opath := pflag.GetString("out")
+			opath := cmd.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
 				var err error
@@ -67,9 +67,9 @@ func Main(onFail ...onfail.OnFail) error {
 				defer out.Close()
 			}
 			switch {
-			case pflag.GetBool("json"):
+			case cmd.GetBool("json"):
 				fmt.Fprintln(out, eula.Json())
-			case pflag.GetBool("xml"):
+			case cmd.GetBool("xml"):
 				fmt.Fprintln(out, eula.Xml())
 			default:
 				fmt.Fprintln(out, eula.Eula)
@@ -87,7 +87,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
 			legal := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
-			opath := pflag.GetString("out")
+			opath := cmd.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
 				var err error
@@ -97,9 +97,9 @@ func Main(onFail ...onfail.OnFail) error {
 				defer out.Close()
 			}
 			switch {
-			case pflag.GetBool("json"):
+			case cmd.GetBool("json"):
 				fmt.Fprintln(out, legal.Json())
-			case pflag.GetBool("xml"):
+			case cmd.GetBool("xml"):
 				fmt.Fprintln(out, legal.Xml())
 			default:
 				fmt.Fprintln(out, legal.Eula)
@@ -117,7 +117,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Long: `Print the End User License Agreement (EULA)`,
 		Run: func(cmd *cobra.Command, args []string) {
 			license := NewLegal(NewCopyright(CopyrightFirstYear, CopyrightHolder), License, Eula)
-			opath := pflag.GetString("out")
+			opath := cmd.GetString("out")
 			out := os.Stdout
 			if opath != "-" {
 				var err error
@@ -127,9 +127,9 @@ func Main(onFail ...onfail.OnFail) error {
 				defer out.Close()
 			}
 			switch {
-			case pflag.GetBool("json"):
+			case cmd.GetBool("json"):
 				fmt.Fprintln(out, license.Json())
-			case pflag.GetBool("xml"):
+			case cmd.GetBool("xml"):
 				fmt.Fprintln(out, license.Xml())
 			default:
 				fmt.Fprintln(out, license.Eula)
@@ -190,3 +190,4 @@ type viperPFlagBinding struct {
 var viperPFlagBindings []viperPFlagBinding
 
 // Derivative of [snippet](https://github.com/spf13/viper/issues/82#issuecomment-403165788) by [WGH-](https://github.com/WGH-)
+// Used with permission in a work licensed CC0-1.0.
