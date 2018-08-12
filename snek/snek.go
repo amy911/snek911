@@ -38,11 +38,11 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 			switch {
 			case pflag.GetBool("json"):
-				fmt.Fprintln(copyright.Json())
+				fmt.Fprintln(out, copyright.Json())
 			case pflag.GetBool("xml"):
-				fmt.Fprintln(copyright.Xml())
+				fmt.Fprintln(out, copyright.Xml())
 			default:
-				fmt.Fprintln(copyright.Robots)
+				fmt.Fprintln(out, copyright.Robots)
 			}
 		},
 	}
@@ -68,11 +68,11 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 			switch {
 			case pflag.GetBool("json"):
-				fmt.Fprintln(eula.Json())
+				fmt.Fprintln(out, eula.Json())
 			case pflag.GetBool("xml"):
-				fmt.Fprintln(eula.Xml())
+				fmt.Fprintln(out, eula.Xml())
 			default:
-				fmt.Fprintln(eula.Robots)
+				fmt.Fprintln(out, eula.Robots)
 			}
 		},
 	}
@@ -98,11 +98,11 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 			switch {
 			case pflag.GetBool("json"):
-				fmt.Fprintln(legal.Json())
+				fmt.Fprintln(out, legal.Json())
 			case pflag.GetBool("xml"):
-				fmt.Fprintln(legal.Xml())
+				fmt.Fprintln(out, legal.Xml())
 			default:
-				fmt.Fprintln(legal.Robots)
+				fmt.Fprintln(out, legal.Robots)
 			}
 		},
 	}
@@ -128,11 +128,11 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 			switch {
 			case pflag.GetBool("json"):
-				fmt.Fprintln(license.Json())
+				fmt.Fprintln(out, license.Json())
 			case pflag.GetBool("xml"):
-				fmt.Fprintln(license.Xml())
+				fmt.Fprintln(out, license.Xml())
 			default:
-				fmt.Fprintln(license.Robots)
+				fmt.Fprintln(out, license.Robots)
 			}
 		},
 	}
