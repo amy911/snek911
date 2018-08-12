@@ -30,7 +30,7 @@ func BindOne(configName string, flag *pflag.Flag, onFail ...interface{}) error {
 	if err := viper.BindPFlag(configName, flag); err != nil {
 		return onfail.Fail(err, flag, onfail.Print, onFail)
 	}
-	viperPFlagBindings = append(viperPFlagBindings, viperPFlagBinding(configName, flag.Value))
+	viperPFlagBindings = append(viperPFlagBindings, viperPFlagBinding{configName, flag.Value})
 	return nil
 }
 
