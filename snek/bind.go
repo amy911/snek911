@@ -6,6 +6,8 @@ import (
 	"github.com/amy911/amy911/onfail"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 )
 
 func Bind(cmd *cobra.Command, args ...interface{}) {
