@@ -35,3 +35,4 @@ func BindOne(configName string, flag *pflag.Flag, onFail ...interface{}) error {
 }
 
 // Derivative of [snippet](https://github.com/spf13/viper/issues/82#issuecomment-403165788) by [WGH-](https://github.com/WGH-)
+// Used with permission in a work licensed CC0-1.0.
