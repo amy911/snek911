@@ -3,6 +3,7 @@ package snek
 import (
 	"encoding/json"
 	"encoding/xml"
+	"strings"
 
 	"github.com/amy911/amy911/onfail"
 )
@@ -32,6 +33,7 @@ func (legal *Legal) Init(copyright *Copyright, license, eula string) *Legal {
 	if strings.Contains(license, "\n") {
 		panic("License should be the short identifier.  Use EULA for the full text.")
 	}
+	return legal
 }
 
 func (legal *Legal) Json(onFail ...onfail.OnFail) string {
