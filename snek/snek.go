@@ -41,7 +41,7 @@ func Main(onFail ...onfail.OnFail) error {
 			default:
 				fmt.Fprintln(copyright.Robots)
 			}
-		}
+		},
 	}
 	eulaCmd = &cobra.Command{
 		Use: "eula",
@@ -66,7 +66,7 @@ func Main(onFail ...onfail.OnFail) error {
 			default:
 				fmt.Fprintln(eula.Robots)
 			}
-		}
+		},
 	}
 	legalCmd = &cobra.Command{
 		Use: "legal",
@@ -91,7 +91,7 @@ func Main(onFail ...onfail.OnFail) error {
 			default:
 				fmt.Fprintln(legal.Robots)
 			}
-		}
+		},
 	}
 	licenseCmd = &cobra.Command{
 		Use: "license",
@@ -116,7 +116,7 @@ func Main(onFail ...onfail.OnFail) error {
 			default:
 				fmt.Fprintln(license.Robots)
 			}
-		}
+		},
 	}
 	rootCmd = &cobra.Command{Use: os.Args[0]}
 	rootCmd.PersistentFlags().StringP("out", "o", "-", "Output to this file (or \"-\" for stdout)")
@@ -128,7 +128,7 @@ func Main(onFail ...onfail.OnFail) error {
 		Long: `Print the version`,
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println(Version)
-		}
+		},
 	}
 	if InitRoot != nil {
 		if err := InitRoot(rootCmd); err != nil {
