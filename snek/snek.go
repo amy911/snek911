@@ -72,7 +72,7 @@ func Main(onFail ...onfail.OnFail) error {
 			case pflag.GetBool("xml"):
 				fmt.Fprintln(out, eula.Xml())
 			default:
-				fmt.Fprintln(out, eula.Robots)
+				fmt.Fprintln(out, eula.Eula)
 			}
 		},
 	}
@@ -102,7 +102,7 @@ func Main(onFail ...onfail.OnFail) error {
 			case pflag.GetBool("xml"):
 				fmt.Fprintln(out, legal.Xml())
 			default:
-				fmt.Fprintln(out, legal.Robots)
+				fmt.Fprintln(out, legal.Eula)
 			}
 		},
 	}
@@ -132,7 +132,7 @@ func Main(onFail ...onfail.OnFail) error {
 			case pflag.GetBool("xml"):
 				fmt.Fprintln(out, license.Xml())
 			default:
-				fmt.Fprintln(out, license.Robots)
+				fmt.Fprintln(out, license.Eula)
 			}
 		},
 	}
