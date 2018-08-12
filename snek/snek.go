@@ -21,7 +21,7 @@ var (
 )
 
 func Main(onFail ...onfail.OnFail) error {
-	copyrightCmd = &cobra.Command{
+	copyrightCmd := &cobra.Command{
 		Use: "copyright",
 		Short: "Print the copyright",
 		Long: `Print the copyright`,
@@ -46,7 +46,12 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 		},
 	}
-	eulaCmd = &cobra.Command{
+	if InitCopyright != nil {
+		if err := InitCopyright(copyrightCmd); err != nil {
+			return onfail.Fail(err, copyrightCmd, onfail.Print, onFail)
+		}
+	}
+	eulaCmd := &cobra.Command{
 		Use: "eula",
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
@@ -71,7 +76,12 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 		},
 	}
-	legalCmd = &cobra.Command{
+	if InitEula != nil {
+		if err := InitEula(eulaCmd); err != nil {
+			return onfail.Fail(err, eulaCmd, onfail.Print, onFail)
+		}
+	}
+	legalCmd := &cobra.Command{
 		Use: "legal",
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
@@ -96,7 +106,12 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 		},
 	}
-	licenseCmd = &cobra.Command{
+	if InitLegal != nil {
+		if err := InitLegal(legalCmd); err != nil {
+			return onfail.Fail(err, legalCmd, onfail.Print, onFail)
+		}
+	}
+	licenseCmd := &cobra.Command{
 		Use: "license",
 		Short: "Print the End User License Agreement (EULA)",
 		Long: `Print the End User License Agreement (EULA)`,
@@ -121,11 +136,12 @@ func Main(onFail ...onfail.OnFail) error {
 			}
 		},
 	}
-	rootCmd = &cobra.Command{Use: os.Args[0]}
-	rootCmd.PersistentFlags().StringP("out", "o", "-", "Output to this file (or \"-\" for stdout)")
-	rootCmd.PersistentFlags().Bool("json", false, "Output in json")
-	rootCmd.PersistentFlags().Bool("xml", false, "Output in xml")
-	versionCmd = &cobra.Command{
+	if InitLicense != nil {
+		if err := InitLicense(licenseCmd); err != nil {
+			return onfail.Fail(err, licenseCmd, onfail.Print, onFail)
+		}
+	}
+	versionCmd := &cobra.Command{
 		Use: "version",
 		Short: "Print the version",
 		Long: `Print the version`,
@@ -133,16 +149,25 @@ func Main(onFail ...onfail.OnFail) error {
 			fmt.Println(Version)
 		},
 	}
+	if InitVersion != nil {
+		if err := InitVersion(versionCmd); err != nil {
+			return onfail.Fail(err, versionCmd, onfail.Print, onFail)
+		}
+	}
+	rootCmd := &cobra.Command{Use: os.Args[0]}
+	rootCmd.PersistentFlags().StringP("out", "o", "-", "Output to this file (or \"-\" for stdout)")
+	rootCmd.PersistentFlags().Bool("json", false, "Output in json")
+	rootCmd.PersistentFlags().Bool("xml", false, "Output in xml")
 	if InitRoot != nil {
 		if err := InitRoot(rootCmd); err != nil {
 			return onfail.Fail(err, rootCmd, onfail.Print, onFail)
 		}
 	}
-	if InitVersion != nil {
-		if err := InitVersion(versiontCmd); err != nil {
-			return onfail.Fail(err, versiontCmd, onfail.Print, onFail)
-		}
-	}
+	rootCmd.AddCommand(copyrightCmd)
+	rootCmd.AddCommand(eulaCmd)
+	rootCmd.AddCommand(legalCmd)
+	rootCmd.AddCommand(licenseCmd)
+	rootCmd.AddCommand(versionCmd)
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 		if err := viper.ReadInConfig(); err != nil {
 			if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
