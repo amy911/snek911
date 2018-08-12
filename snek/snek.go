@@ -1,6 +1,9 @@
 package snek
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/amy911/amy911/onfail"
 
 	"github.com/spf13/cobra"
